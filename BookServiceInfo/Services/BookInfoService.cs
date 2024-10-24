@@ -1,22 +1,32 @@
 ﻿using BookinfoCommon.Interfaces;
 using BookinfoCommon.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net.Http.Json;
 
 namespace BookServiceInfo.Services
 {
     public class BookInfoService : IBookInfoService
     {
-        public async Task<Book> GetBookById(string id)
+        private readonly HttpClient _httpClient;
+        public BookInfoService()
         {
-            return new Book()
-            {
-                id = id,
-                info="test"
-            };
+            _httpClient = new HttpClient();
         }
+        public async Task<BookInfo> GetBookById(string id)
+        {
+            return await GetDataFromThirdParty(id);
+        }
+    
+        public async Task<BookInfo> GetDataFromThirdParty(string id)
+        {
+            var response = await _httpClient.GetAsync($"https://get.taaghche.com/v2/book/{id}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadFromJsonAsync<BookInfo>();
+            }
+            return null;
+        }
+    
+    
     }
 }

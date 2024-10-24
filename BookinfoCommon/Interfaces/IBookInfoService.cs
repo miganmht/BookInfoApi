@@ -10,7 +10,7 @@ namespace BookinfoCommon.Interfaces
     public interface IBookInfoService
     {
 
-        Task<Book> GetBookById(string id); 
+        Task<BookInfo> GetBookById(string id); 
 
 
     }
