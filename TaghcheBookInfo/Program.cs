@@ -1,6 +1,10 @@
 using BookinfoCommon;
 using BookinfoCommon.Interfaces;
+using BookinfoCommon.Models;
+using BookServiceInfo.Data;
 using BookServiceInfo.Services;
+using RedisManager;
+using StackExchange.Redis;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -9,6 +13,14 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddHttpClient();
+builder.Services.AddSingleton<InMemoryCache<BookInfo>>();
+builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
+{
+    var redisConfiguration = builder.Configuration.GetConnectionString("Redis");
+    return ConnectionMultiplexer.Connect(redisConfiguration);
+});
+builder.Services.AddScoped(typeof(RedisCacheService<>));
 builder.Services.AddScoped<IBookInfoService, BookInfoService>();
 
 var app = builder.Build();

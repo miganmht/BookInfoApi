@@ -11,19 +11,12 @@ namespace BookServiceInfo.Data
     public class InMemoryCache<T> : ICache<T>
     {
         private ConcurrentDictionary<string, T> _catch=new ConcurrentDictionary<string, T>();
-        private static InMemoryCache<T> _instance { get; set; }
-        private InMemoryCache() {
+        
+        public InMemoryCache() {
         
         
         }
-        public static InMemoryCache<T> Getinstance()
-        {
-            if (_instance == null)
-            {
-                _instance = new InMemoryCache<T>();
-            }
-            return _instance;
-        }
+   
         public bool TryAdd(string key, T value)
         {
             return _catch.TryAdd(key, value);
