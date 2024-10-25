@@ -3,6 +3,7 @@ using BookinfoCommon.Interfaces;
 using BookinfoCommon.Models;
 using BookServiceInfo.Data;
 using BookServiceInfo.Services;
+using MassTransit;
 using RedisManager;
 using StackExchange.Redis;
 var builder = WebApplication.CreateBuilder(args);
@@ -29,7 +30,26 @@ builder.Services.AddSingleton(sp =>
     return new RedisCacheService<BookInfo>(redisConnection, minute);
 });
 builder.Services.AddScoped<IBookInfoService, BookInfoService>();
+builder.Services.AddMassTransit(x =>
+{
+    // Add the consumer for BookInfo changes
+    x.AddConsumer<BookInfoChangedConsumer>();
 
+    // Configure RabbitMQ
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host("localhost", "/", h =>
+        {
+            h.Username("guest");
+            h.Password("guest");
+        });
+
+        cfg.ReceiveEndpoint("book-info-change-queue", ep =>
+        {
+            ep.ConfigureConsumer<BookInfoChangedConsumer>(context);
+        });
+    });
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

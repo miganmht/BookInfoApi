@@ -54,9 +54,9 @@ namespace RedisManager
             }
         }
 
-        public async void Remove(string key)
+        public  void Remove(string key)
         {
-           await _db.KeyDeleteAsync(key);
+            _db.KeyDelete("book:"+key);
         }
 
         public bool TryAdd(string key, T value)

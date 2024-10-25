@@ -53,7 +53,13 @@ namespace BookServiceInfo.Services
             }
             return null;
         }
-    
-    
+        
+        public async Task RemoveFromCache(string bookid)
+        {
+            inMemoryCache.Remove(bookid);
+            inRedisCache.Remove(bookid);
+        }
+
+     
     }
 }
