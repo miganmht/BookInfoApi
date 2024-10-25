@@ -22,7 +22,7 @@ namespace BookServiceInfo.Data
         public Task Consume(ConsumeContext<BookInfoChanged> context)
         {
             var bookId = context.Message.BookId;
-
+            Console.WriteLine($"Book id consume {bookId}");
             return Task.Run(() => {
                 _inMemoryCache.Remove(bookId);
                 _redisCache.Remove(bookId);

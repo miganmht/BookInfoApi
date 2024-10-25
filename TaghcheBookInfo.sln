@@ -14,7 +14,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedisManager", "RedisManager\RedisManager.csproj", "{CFA7C9E9-C2BD-4A38-A769-F2DB1710C54A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedisManager", "RedisManager\RedisManager.csproj", "{CFA7C9E9-C2BD-4A38-A769-F2DB1710C54A}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{4BDD1B0A-994C-4664-94D7-D887DDF187EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,6 +58,14 @@ Global
 		{CFA7C9E9-C2BD-4A38-A769-F2DB1710C54A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CFA7C9E9-C2BD-4A38-A769-F2DB1710C54A}.Release|x64.ActiveCfg = Release|Any CPU
 		{CFA7C9E9-C2BD-4A38-A769-F2DB1710C54A}.Release|x64.Build.0 = Release|Any CPU
+		{4BDD1B0A-994C-4664-94D7-D887DDF187EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BDD1B0A-994C-4664-94D7-D887DDF187EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BDD1B0A-994C-4664-94D7-D887DDF187EE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4BDD1B0A-994C-4664-94D7-D887DDF187EE}.Debug|x64.Build.0 = Debug|Any CPU
+		{4BDD1B0A-994C-4664-94D7-D887DDF187EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BDD1B0A-994C-4664-94D7-D887DDF187EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BDD1B0A-994C-4664-94D7-D887DDF187EE}.Release|x64.ActiveCfg = Release|Any CPU
+		{4BDD1B0A-994C-4664-94D7-D887DDF187EE}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

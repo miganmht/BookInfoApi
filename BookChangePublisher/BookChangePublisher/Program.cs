@@ -52,5 +52,6 @@ namespace BookChangePublisher
                     services.AddScoped<BookInfoPublisher>();
                 });
         }
+    
     }
 }

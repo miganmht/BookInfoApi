@@ -1,0 +1,29 @@
+services:
+  taghchebookinfo:
+    image: ${DOCKER_REGISTRY-}taghchebookinfo
+    build:
+      context: .
+      dockerfile: TaghcheBookInfo/Dockerfile
+    ports:
+      - "5000:8080"  
+    depends_on:
+      - redis  
+      - rabbitmq  #
+    environment:
+        CACHE_INMEMORY_PERIOD: 10
+        CACHE_REDIS_PERIOD: 10
+  redis:
+    image: redis:alpine  # Use a lightweight Redis image
+    ports:
+      - "6379:6379"  # Map Redis port
+
+  rabbitmq:
+    image: rabbitmq:management  # Use RabbitMQ with management plugin for easier access
+    ports:
+      - "5672:5672"  # RabbitMQ default port
+      - "15672:15672"  # Management UI port
+      
+    environment:
+      RABBITMQ_DEFAULT_USER: guest  # Set a default username
+      RABBITMQ_DEFAULT_PASS: guest  # Set a default password
+

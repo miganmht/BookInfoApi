@@ -17,18 +17,28 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();
 builder.Services.AddSingleton(sp =>
 {
-    int minute = builder.Configuration.GetSection("CacheSettings").GetValue<int>("InMemoryCachePeriod");
-    return new InMemoryCache<BookInfo>(minute);
+    var configuration = sp.GetRequiredService<IConfiguration>();
+
+
+    var inMemoryCachePeriod = int.Parse(
+        Environment.GetEnvironmentVariable("CACHE_INMEMORY_PERIOD") ?? configuration["CacheSettings:InMemoryCachePeriod"]
+    );
+    Console.WriteLine($"inMemoryCachePeriod:{inMemoryCachePeriod}");
+    //int minute = builder.Configuration.GetSection("CacheSettings").GetValue<int>("InMemoryCachePeriod");
+    return new InMemoryCache<BookInfo>(inMemoryCachePeriod);
 });
 
 builder.Services.AddSingleton(sp =>
 {
+    var configuration = sp.GetRequiredService<IConfiguration>();
     var redisConfiguration = builder.Configuration.GetConnectionString("Redis");
-    var redisConnection= ConnectionMultiplexer.Connect(redisConfiguration);
-    int minute = builder.Configuration.GetSection("CacheSettings").GetValue<int>("RedisCachePeriod");
-   
-    return new RedisCacheService<BookInfo>(redisConnection, minute);
+    var redisConnection = ConnectionMultiplexer.Connect(redisConfiguration);
+    //int minute = builder.Configuration.GetSection("CacheSettings").GetValue<int>("RedisCachePeriod");
+    var redisCachePeriod = int.Parse(Environment.GetEnvironmentVariable("CACHE_REDIS_PERIOD") ?? configuration["CacheSettings:RedisCachePeriod"]);
+    Console.WriteLine($"redisCachePeriod:{redisCachePeriod}");
+    return new RedisCacheService<BookInfo>(redisConnection, redisCachePeriod);
 });
+
 builder.Services.AddScoped<IBookInfoService, BookInfoService>();
 builder.Services.AddMassTransit(x =>
 {
@@ -38,7 +48,7 @@ builder.Services.AddMassTransit(x =>
     // Configure RabbitMQ
     x.UsingRabbitMq((context, cfg) =>
     {
-        cfg.Host("localhost", "/", h =>
+        cfg.Host("rabbitmq", "/", h =>
         {
             h.Username("guest");
             h.Password("guest");
@@ -50,6 +60,7 @@ builder.Services.AddMassTransit(x =>
         });
     });
 });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

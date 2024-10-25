@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace BookChangePublisher
 {
+
     public class BookInfoPublisher
     {
         public async Task PublishBookInfoChange(string bookId)
@@ -32,4 +33,5 @@ namespace BookChangePublisher
             }
         }
     }
+
 }
