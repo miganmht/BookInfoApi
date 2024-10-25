@@ -11,12 +11,14 @@ namespace BookServiceInfo.Services
         private readonly HttpClient _httpClient;
         private readonly InMemoryCache<BookInfo> inMemoryCache;
         private readonly RedisCacheService<BookInfo> inRedisCache;
+
         public BookInfoService(HttpClient httpClient, InMemoryCache<BookInfo> inMemoryCache, RedisCacheService<BookInfo> inRedisCache)
         {
             
             this._httpClient = httpClient;
             this.inMemoryCache = inMemoryCache;
             this.inRedisCache = inRedisCache;
+           
         }
         public async Task<BookInfo> GetBookById(string id)
         {
@@ -32,6 +34,7 @@ namespace BookServiceInfo.Services
             {
                 var res = await GetDataFromThirdParty(id);
                 if (res != null) { 
+                  
                     inMemoryCache.TryAddAsync(id, res);
                     inRedisCache.TryAddAsync(id, res);
                 }

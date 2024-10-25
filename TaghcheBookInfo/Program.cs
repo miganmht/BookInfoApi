@@ -14,13 +14,20 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();
-builder.Services.AddSingleton<InMemoryCache<BookInfo>>();
-builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
+builder.Services.AddSingleton(sp =>
+{
+    int minute = builder.Configuration.GetSection("CacheSettings").GetValue<int>("InMemoryCachePeriod");
+    return new InMemoryCache<BookInfo>(minute);
+});
+
+builder.Services.AddSingleton(sp =>
 {
     var redisConfiguration = builder.Configuration.GetConnectionString("Redis");
-    return ConnectionMultiplexer.Connect(redisConfiguration);
+    var redisConnection= ConnectionMultiplexer.Connect(redisConfiguration);
+    int minute = builder.Configuration.GetSection("CacheSettings").GetValue<int>("RedisCachePeriod");
+   
+    return new RedisCacheService<BookInfo>(redisConnection, minute);
 });
-builder.Services.AddScoped(typeof(RedisCacheService<>));
 builder.Services.AddScoped<IBookInfoService, BookInfoService>();
 
 var app = builder.Build();
