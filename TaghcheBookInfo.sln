@@ -12,6 +12,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{474C68EB-9ABA-4F8C-A13A-1A0F0581DF6E}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedisManager", "RedisManager\RedisManager.csproj", "{CFA7C9E9-C2BD-4A38-A769-F2DB1710C54A}"
