@@ -4,24 +4,18 @@ Taghche is a platform designed for reading books, and this project provides an A
 
 ## Features
 
-- **Fetch Book Information**: The API provides an endpoint to retrieve details about a specific book using its ID.
-- **Caching**: Implements caching strategies using Redis and in-memory caching to improve response times and reduce database load.
+- **GET Endpoint**: Allows users to retrieve book information by sending a book ID.
+- **Caching**: Implements in-memory and Redis caching to improve response times and reduce load on the database.
 
-## API Endpoints
+## API Endpoint
 
-### POST /api/book
+### Get Book Information
 
-- **Description**: Fetches information about a book based on its ID.
-- **Request Body**:
-    ```json
-    {
-        "id": "string"  // The ID of the book
-    }
-    ```
-- **Response**:
-    - On success, returns details about the book.
-    - On failure, returns an appropriate error message.
-
+- **Endpoint**: `GET /api/book/{id}`
+- **Description**: Retrieves information about a book given its ID.
+- **Parameters**:
+  - `id` (string): The unique identifier for the book.
+  - 
 ## Getting Started
 
 ### Prerequisites
