@@ -15,7 +15,7 @@ Taghche is a platform designed for reading books, and this project provides an A
 - **Description**: Retrieves information about a book given its ID.
 - **Parameters**:
   - `id` (string): The unique identifier for the book.
-  - 
+
 ## Getting Started
 
 ### Prerequisites
